@@ -22,14 +22,14 @@ Pair ABI: https://etherscan.io/address/0x3139Ffc91B99aa94DA8A2dc13f1fC36F9BDc98e
 
 ## How to run the program?
 
-Simply `docker-compose build` and `docker-compose app up`. That should initiate the listening process and expose to localhost the website so simply accesing localhost:80 should be enough while running this docker container to see the pairs loading and the price updates afterwards.
-
-If you wish to run tests, `docker-compose run tests` or `poetry run pytest`.
-
 To install the code locally you will need poetry (https://python-poetry.org/) installed as this is my prefered way to manage dependencies in Python.
 
+Simply `poetry run python upl/app.py` will start a flask server
+
+If you wish to run tests, `poetry run pytest`.
 
 ## TODO's
 
 - Make the page nicer!
-- Few Dockerfile optimizations
+- Test Flask app
+- Dockerize aplication

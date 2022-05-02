@@ -1,11 +1,9 @@
 import logging
 
+from upl.abis import PAIR_ABI, SYMBOL_ABI, UNISWAP_FACOTRY_ABI
 from web3 import Web3
 
-from upl.abis import UNISWAP_FACOTRY_ABI, PAIR_ABI, SYMBOL_ABI
-from upl.app import sio
-
-W3 = Web3(Web3.WebsocketProvider("wss://mainnet.infura.io/ws/v3/b6744db53a18407799db22924e0725db"))
+W3 = Web3(Web3.HTTPProvider("https://mainnet.infura.io/v3/b6744db53a18407799db22924e0725db"))
 
 
 class Pair:
@@ -21,8 +19,8 @@ class Pair:
         )
 
     def get_pair_price(self):
-        reserves = self.contract.functions.getReserves.call()
-        return reserves[0] / reserves[1]   
+        reserves = self.contract.functions.getReserves().call()
+        return reserves[0] / reserves[1]
 
 
 class UniswapPriceListener:
@@ -65,11 +63,11 @@ class UniswapPriceListener:
             price=reserves[0] / reserves[1]
         )
 
-    def load_pairs(self):
+    def load_pairs(self, sio):
         logging.info("Loading pairs")
         for n in range(self.get_total_pairs()+1):
             pair_info = self.get_pair_info(n)
-            msg = f"Added pair {pair_info}"
+            msg = f"Added pair {pair_info.symbol}"
             sio.emit(msg)
             logging.info(msg)
             self.pairs.append(pair_info)      
